@@ -32,42 +32,20 @@ gulp.task('build-copy', function () {
 });
 
 gulp.task('clean', function() {
-   del([dist + '/**/*.html', dist + '/**/*.htm', dist + '/**/*.css'], dist + 'app');
+    return del([dist + '**/*.html', dist + '**/*.htm', dist + '**/*.css', dist + 'app/**', dist + 'vendor/**']);
 });
 
 gulp.task('vendor', function() {
-    del([dist + '/vendor/**/*']);
 
-    gulp.src(['node_modules/@angular/**'])
-        .pipe(gulp.dest(dist + 'vendor/@angular'));
-
-    //ES6 Shim
-    gulp.src('node_modules/es6-shim/**')
-        .pipe(gulp.dest(dist + '/vendor/es6-shim/'));
-
-    //reflect metadata
-    gulp.src('node_modules/reflect-metadata/**')
-        .pipe(gulp.dest(dist + '/vendor/reflect-metadata/'));
-
-    //rxjs
-    gulp.src('node_modules/rxjs/**')
-        .pipe(gulp.dest(dist + '/vendor/rxjs/'));
-
-    //systemjs
-    gulp.src('node_modules/systemjs/**')
-        .pipe(gulp.dest(dist + '/vendor/systemjs/'));
-    
-    // ng2-bootstrap
-    gulp.src('node_modules/ng2-bootstrap/**')
-        .pipe(gulp.dest(dist + '/vendor/ng2-bootstrap/'));
-
-    // moment
-    gulp.src('node_modules/moment/**')
-        .pipe(gulp.dest(dist + '/vendor/moment/'));
-
-    //zonejs
-    return gulp.src('node_modules/zone.js/**')
-        .pipe(gulp.dest(dist + '/vendor/zone.js/'));
+    return gulp.src(['node_modules/@angular/**',
+    'node_modules/es6-shim/**',
+    'node_modules/reflect-metadata/**',
+    'node_modules/rxjs/**',
+    'node_modules/systemjs/**',
+    'node_modules/ng2-bootstrap/**',
+    'node_modules/moment/**',
+    'node_modules/zone.js/**'],  {base: './node_modules/'})
+        .pipe(gulp.dest(dist + 'vendor/'));
 });
 
 gulp.task('watch', function() {
